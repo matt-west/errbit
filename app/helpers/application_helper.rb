@@ -1,4 +1,25 @@
 module ApplicationHelper
+  
+  def available_apps
+    if current_user.present?  
+      if current_user.admin?
+        App.all
+      else
+        current_user.apps
+      end
+    else
+      []
+    end   
+  end
+
+  def current_app
+    if @app && @app.persisted?
+      @app
+    else
+      nil
+    end
+  end
+
   def message_graph(problem)
     create_percentage_table_for(problem.messages)
   end
