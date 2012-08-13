@@ -1,8 +1,10 @@
-#nav-bar
-  %ul
-    //%li= link_to 'Dashboard', admin_dashboard_path, :class => active_if_here(:dashboards)
+.nav-collapse
+  %ul{:class=> 'nav'}
     %li.apps{:class => active_if_here(:apps)}= link_to 'Apps', apps_path
+    %li.divider-vertical
     %li.errs{:class => active_if_here(:errs)}= link_to 'Errors', errs_path
+    %li.divider-vertical
     - if user_signed_in? && current_user.admin?
       %li.users{:class => active_if_here(:users)}= link_to 'Users', users_path
-  %div.clear
+  %form{:class => 'navbar-search pull-left'}
+    %input{:type => 'text', :class => 'search-query span2', :placeholder => 'Search'}

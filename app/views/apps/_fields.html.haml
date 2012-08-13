@@ -1,12 +1,16 @@
 = errors_for @app
 
-%div.required
+%div.control-group
   = f.label :name
-  = f.text_field :name
+  %div.controls
+    = f.text_field :name, :placeholder => 'Application Name'
+    %span.help-inline= 'Enter a name for your application'
 
-%div
+%div.control-group
   = f.label :github_repo
-  = f.text_field :github_repo, :placeholder => "errbit/errbit from https://github.com/errbit/errbit"
+  %div.controls
+    = f.text_field :github_repo, :placeholder => "https://github.com/fac/errbit"
+    %span.help-inline= 'Enter the location of the repository on Github'
 
 %fieldset
   %legend Notifications

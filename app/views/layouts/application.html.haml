@@ -12,17 +12,18 @@
 
     = yield :head
   %body{:id => controller.controller_name, :class => controller.action_name}
-    #header
-      %div
-        = link_to 'Errbit', root_path, :id => 'site-name'
-        = render 'shared/navigation' if current_user
-        = render 'shared/session'
-    #content-wrapper
-      #content-title{ :class => (yield :title_css_class).to_s }
+    %div{ :id => 'header', :class=> 'navbar navbar-fixed-top'}
+      .navbar-inner
+        .container
+          = link_to 'Errbit', root_path, :id => 'site-name', :class => 'brand'
+          = render 'shared/navigation' if current_user
+          = render 'shared/session'
+    .container
+      %header{ :class => 'jumbotron subhead' }
         %h1= yield :title
-        %span.meta= yield :meta
+        %p.lead= yield :meta
         - if (action_bar = yield(:action_bar)).present?
-          #action-bar
+          %div{ :id => 'action-bar', :class => 'well' }
             = action_bar
       #content
         = render 'shared/flash_messages'
@@ -30,6 +31,6 @@
       - if content_for?(:comments)
         #content-comments
           = yield :comments
-    #footer= "Powered by #{link_to 'Errbit', 'http://github.com/errbit/errbit', :target => '_blank'}: the open source error catcher.".html_safe
+      %footer= "Powered by #{link_to 'Errbit', 'http://github.com/errbit/errbit', :target => '_blank'}: the open source error catcher.".html_safe
     = yield :scripts
 
