@@ -1,8 +1,8 @@
 class ErrsController < ApplicationController
   include ActionView::Helpers::TextHelper
 
-  before_filter :find_app, :except => [:index, :all, :destroy_several, :resolve_several, :unresolve_several, :merge_several, :unmerge_several]
-  before_filter :find_problem, :except => [:index, :all, :destroy_several, :resolve_several, :unresolve_several, :merge_several, :unmerge_several]
+  before_filter :find_app, :except => [:index, :all, :destroy_several, :resolve_several, :unresolve_several, :merge_several, :unmerge_several, :search]
+  before_filter :find_problem, :except => [:index, :all, :destroy_several, :resolve_several, :unresolve_several, :merge_several, :unmerge_several, :search]
   before_filter :find_selected_problems, :only => [:destroy_several, :resolve_several, :unresolve_several, :merge_several, :unmerge_several]
   before_filter :set_sorting_params, :only => [:index, :all]
   before_filter :set_tracker_params, :only => [:create_issue]
@@ -18,6 +18,17 @@ class ErrsController < ApplicationController
       end
       format.atom
     end
+  end
+
+  def search
+    raise "Elastic Search is not enabled" unless Errbit::Config.elastic_search_enabled
+    visible_apps = current_user.admin? ? App.all : current_user.apps
+    if params[:app_id]
+      visible_apps = visible_apps.where(:_id => params[:app_id])
+    end
+    @search = Search.new(params, :apps => visible_apps.map(&:id))
+    @problems = @search.results
+    @selected_problems = params[:problems] || []
   end
 
   def all
