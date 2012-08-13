@@ -61,6 +61,16 @@ module ApplicationHelper
     render "errs/tally_table", :rows => rows
   end
 
+  def search_path
+    if params[:controller] == 'apps' && params[:action] == 'show'
+      search_app_errs_path(:app_id => params[:id])
+    elsif params[:app_id]
+      search_app_errs_path(:app_id => params[:app_id])
+    else
+      search_errs_path
+    end
+  end
+
   private
     def total_from_tallies(tallies)
       tallies.values.inject(0) {|sum, n| sum + n}
