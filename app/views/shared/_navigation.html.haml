@@ -11,6 +11,7 @@
         - for app in available_apps
           %li= link_to app.name, app_path(app)
         - if current_user.admin?
+          %li.divider
           %li= link_to 'Add a New App', new_app_path
     %li.divider-vertical
     %li.errs{:class => active_if_here(:errs)}= link_to 'Errors', errs_path
