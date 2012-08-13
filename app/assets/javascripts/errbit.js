@@ -43,7 +43,7 @@ $(function() {
 
       $('#content').bind('pjax:start',  function() {
         $('.notice-pagination-loader').css("visibility", "visible");
-        currentTab = $('.tab-bar ul li .button.active').attr('rel');
+        currentTab = $('.tab-bar a.button.active, .tab-bar button.button.active').attr('rel');
       });
 
       $('#content').bind('pjax:end',  function() {
@@ -53,19 +53,19 @@ $(function() {
   }
 
   function activateTabbedPanels() {
-    $('.tab-bar a, .tab-bar .button').each(function(){
+    $('.tab-bar a, .tab-bar button.button').each(function(){
       var tab = $(this);
       var panel = $('#'+tab.attr('rel'));
       panel.addClass('panel');
       panel.find('h3').hide();
     });
 
-    $('.tab-bar a, .tab-bar .button').click(function(){
+    $('.tab-bar a, .tab-bar button.button').click(function(){
       activateTab($(this));
       return(false);
     });
 
-    var btn = $('.tab-bar .button[rel=' + currentTab + ']');
+    var btn = $('.tab-bar a[rel=' + currentTab + '], .tab-bar button.button[rel=' + currentTab + ']');
 
     activateTab(btn);
   }

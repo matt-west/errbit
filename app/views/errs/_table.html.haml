@@ -46,12 +46,10 @@
           %td{:colspan => (any_issue_links ? 8 : 7)}
             %em No errs here
   = paginate errs
-  .btn-toolbar
-    .btn-group
-      .tab-bar
-        %button{ :id => 'merge_errs', :class => 'button btn', 'data-action' => merge_several_errs_path } Merge
-        %button{ :id => 'unmerge_errs', :class => 'button btn', 'data-action' => unmerge_several_errs_path } Unmerge
-        %button{ :id => 'resolve_errs', :class => 'button btn', 'data-action' => resolve_several_errs_path} Resolve
-        %button{ :id => 'unresolve_errs', :class => 'button btn', 'data-action' => unresolve_several_errs_path} Unresolve
-        %button{ :id => 'delete_errs', :class => 'button btn', 'data-action' => destroy_several_errs_path} Delete
+  .btn-toolbar.tab-bar
+    %input{ :type => 'submit', :id => 'merge_errs', :class => 'button btn', 'data-action' => merge_several_errs_path, :name => 'commit', :value => 'Merge' }
+    %input{ :type => 'submit', :id => 'unmerge_errs', :class => 'button btn', 'data-action' => unmerge_several_errs_path, :name => 'commit', :value => 'Unmerge' }
+    %input{ :type => 'submit', :id => 'resolve_errs', :class => 'button btn', 'data-action' => resolve_several_errs_path, :name => 'commit', :value => 'Resolve' }
+    %input{ :type => 'submit', :id => 'unresolve_errs', :class => 'button btn', 'data-action' => unresolve_several_errs_path, :name => 'commit', :value => 'Unresolve' }
+    %input{ :type => 'submit', :id => 'delete_errs', :class => 'button btn', 'data-action' => destroy_several_errs_path, :name => 'commit', :value => 'Delete'}
 

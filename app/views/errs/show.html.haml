@@ -11,16 +11,17 @@
   = @problem.environment
   %strong Last Notice:
   = last_notice_at(@problem).to_s(:precise)
+
 - content_for :action_bar do
   .btn-toolbar
     .btn-group
       - if @problem.unresolved?
-        %span= link_to 'Resolve', resolve_app_err_path(@app, @problem), :method => :put, :data => { :confirm => err_confirm }, :class => 'resolve btn btn-primary'
+        =link_to 'Resolve', resolve_app_err_path(@app, @problem), :method => :put, :data => { :confirm => err_confirm }, :class => 'resolve btn btn-primary'
       - if current_user.authentication_token
-        %span= link_to 'iCal', app_err_path(:app_id => @app.id, :id => @problem.id, :format => "ics", :auth_token => current_user.authentication_token), :class => "calendar_link btn btn-primary"
+        =link_to 'iCal', app_err_path(:app_id => @app.id, :id => @problem.id, :format => "ics", :auth_token => current_user.authentication_token), :class => "calendar_link btn btn-primary"
       = render "issue_tracker_links"
 
-      %span= link_to 'Back To Errors', (request.env['HTTP_REFERER'] ? :back : app_errs_path(@app)), :class => 'up btn pull-right'
+    =link_to 'Back To Errors', (request.env['HTTP_REFERER'] ? :back : app_errs_path(@app)), :class => 'up btn pull-right'
 
 - if Errbit::Config.allow_comments_with_issue_tracker || !@app.issue_tracker_configured? || @problem.comments.any?
   - content_for :comments do
@@ -47,7 +48,7 @@
 = paginate @notices, :param_name => :notice, :theme => :notices
 
 .btn-toolbar
-  .tab-bar
+  .btn-group.tab-bar
     =link_to 'Summary', '#summary', :rel => 'summary', :class => 'button btn'
     =link_to 'Backtrace', '#backtrace', :rel => 'backtrace', :class => 'button btn'
     - if @notice && @notice.user_attributes.present?
