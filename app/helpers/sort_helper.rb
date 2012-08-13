@@ -2,6 +2,7 @@
 module SortHelper
   
   def link_for_sort(name, field=nil)
+    return name if params[:action] == 'search'
     field ||= name.underscore
     current = (@sort == field)
     order   = (current && (@order == "asc")) ? "desc" : "asc"

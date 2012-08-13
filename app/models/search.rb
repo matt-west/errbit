@@ -1,13 +1,11 @@
 class Search
 
-  attr_reader :terms, :show_resolved, :sort, :order
+  attr_reader :terms, :show_resolved
 
   def initialize(params, options = {})
     @apps          = options[:apps] || []
     @terms         = params[:terms]
     @show_resolved = params[:resolved].present?
-    @sort          = params[:sort]
-    @order         = params[:order]
     build_search
   end
 
