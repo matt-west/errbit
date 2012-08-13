@@ -1,40 +1,54 @@
 = errors_for @user
 
-.required
-  = f.label :name
-  = f.text_field :name
+.control-group
+  = f.label :name, :class => 'control-label'
+  .controls
+    = f.text_field :name, :placeholder => 'Joe Bloggs'
+    %p.help-block Enter the full name of this user
 
 - if Errbit::Config.user_has_username
-  .required
-    = f.label :username
-    = f.text_field :username
+  .control-group
+    = f.label :username, :class => 'control-label'
+    .controls
+      = f.text_field :username, :placeholder => 'joebloggs'
+      %p.help-block Enter the username of this user
 
-.required
-  = f.label :email
-  = f.text_field :email
+.control-group
+  = f.label :email, :class => 'control-label'
+  .controls
+    = f.text_field :email, :placeholder => 'joe@joebloggs.com'
+    %p.help-block Enter the users email address
 
 - if Errbit::Config.github_authentication
-  = f.label :github_login
-  = f.text_field :github_login
+  .control-group
+    = f.label :github_login, :class => 'control-label'
+    .controls
+      = f.text_field :github_login, :placeholder => 'joebloggs'
+      %p.help-block Enter the users github username
 
-.required
-  = f.label :per_page, 'Entries per page'
-  = f.select :per_page, [10, 20, 30, 50, 75, 100]
+.control-group
+  %label.control-label{:for => 'per_page'} Entries per page
+  .controls
+    = f.select :per_page, [10, 20, 30, 50, 75, 100]
 
-.required
-  = f.label :time_zone
-  = f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones
+.control-group
+  = f.label :time_zone, :class => 'control-label'
+  .controls
+    = f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones
 
-.required
-  = f.label :password
-  = f.password_field :password, :autocomplete => "off"
+.control-group
+  = f.label :password, :class => 'control-label'
+  .controls
+    = f.password_field :password, :autocomplete => "off"
 
-.required
-  = f.label :password_confirmation
-  = f.password_field :password_confirmation
+.control-group
+  = f.label :password_confirmation, :class => 'control-label'
+  .controls
+    = f.password_field :password_confirmation
 
 - if current_user.admin?
-  .checkbox
-    = f.check_box :admin
-    = f.label :admin, 'Admin?'
+  .control-group
+    %label.control-label.checkbox
+      = f.check_box :admin
+      Admin?
 

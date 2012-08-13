@@ -1,4 +1,4 @@
 - content_for :title, 'All Errors'
 - content_for :action_bar do
-  = link_to 'hide resolved', errs_path, :class => 'button'
+  = link_to 'Hide Resolved', errs_path, :class => 'button btn btn-primary'
 = render 'table', :errs => @problems

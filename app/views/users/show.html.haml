@@ -1,12 +1,12 @@
 - content_for :title, @user.name
 - content_for :action_bar do
   = render 'shared/link_github_account', :user => @user
-  %span= link_to('Add a New User', new_user_path, :class => 'add')
-  = link_to 'edit', edit_user_path(@user), :class => 'button'
-  = link_to 'destroy', user_path(@user), :method => :delete, :data => { :confirm => 'Seriously?' }, :class => 'button'
+  %span= link_to('Add a New User', new_user_path, :class => 'add btn btn-primary')
+  = link_to 'Edit', edit_user_path(@user), :class => 'button btn btn-info'
+  = link_to 'Destroy', user_path(@user), :method => :delete, :data => { :confirm => 'Seriously?' }, :class => 'button btn btn-warning'
 
 
-%table.single_user
+%table.single_user.table.table-striped
   %tr
     %th Email
     %td.main= @user.email
