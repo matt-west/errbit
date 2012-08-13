@@ -10,3 +10,30 @@ body {
   }
 }
 
+/* Watchers and Issue Tracker Forms */
+div.watcher.nested .watcher_params,
+div.issue_tracker.nested .tracker_params {
+  display: none;
+}
+div.nested .chosen {
+  display: block !important;
+}
+div.nested .choose {
+  margin-bottom: 0.5em;
+}
+
+div.issue_tracker.nested label.label_radio {
+  color: #929292;
+  padding-left: 33px;
+  margin-bottom: 6px;
+  margin-right: 8px;
+  line-height: 30px;
+}
+
+#deploys_div, #repository_div, #watchers_div {
+  display: none;
+}
+
+.image_preloader {
+  display: none;
+}

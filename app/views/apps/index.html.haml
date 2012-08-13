@@ -2,7 +2,7 @@
 - content_for :action_bar do
   %span= link_to('Add a New App', new_app_path, :class => 'add btn btn-primary') if current_user.admin?
 
-%table{ :class=> 'table table-striped apps' }
+%table.table.table-striped.apps
   %thead
     %tr
       %th Name

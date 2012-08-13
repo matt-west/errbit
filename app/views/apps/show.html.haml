@@ -10,12 +10,12 @@
   = @app.api_key
 - content_for :action_bar do
   - if current_user.admin?
-    = link_to 'edit', edit_app_path(@app), :class => 'button'
-    = link_to 'destroy', app_path(@app), :method => :delete, :data => { :confirm => 'Seriously?' }, :class => 'button'
+    = link_to 'Edit', edit_app_path(@app), :class => 'button btn btn-primary'
+    = link_to 'Destroy', app_path(@app), :method => :delete, :data => { :confirm => 'Seriously?' }, :class => 'button btn btn-danger'
     - if @all_errs
-      = link_to 'unresolved errs', app_path(@app), :class => 'button'
+      = link_to 'Unresolved Errors', app_path(@app), :class => 'button btn btn-info'
     - else
-      = link_to 'all errs', app_path(@app, :all_errs => true), :class => 'button'
+      = link_to 'All Errors', app_path(@app, :all_errs => true), :class => 'button btn btn-info'
 
 %h3#watchers_toggle
   Watchers
@@ -27,7 +27,7 @@
         %tr
           %th All users will be notified when something happens.
   - else
-    %table.watchers
+    %table.watchers.table.table-striped
       %thead
         %tr
           %th User or Email
@@ -45,7 +45,7 @@
     Repository
     %span.click_span (show/hide)
   #repository_div
-    %table.repository
+    %table.repository.table.table-striped
       %thead
         %tr
           %th GitHub Repo
@@ -58,7 +58,7 @@
   %span.click_span (show/hide)
 #deploys_div
   - if @deploys.any?
-    %table.deploys
+    %table.deploys.table.table-striped
       %thead
         %tr
           %th When
@@ -85,6 +85,6 @@
   %h3.clear Errors
   = render 'errs/table', :errs => @problems
 - else
-  %h3.clear No errs have been caught yet, make sure you setup your app
+  %h3.clear.alert.alert-info No errs have been caught yet, make sure you setup your app
   = render 'configuration_instructions', :app => @app
 

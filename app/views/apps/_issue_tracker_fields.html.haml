@@ -2,12 +2,12 @@
   %legend Issue tracker
   = f.fields_for :issue_tracker do |w|
     %div.issue_tracker.nested
-      %div.choose
-        = label_tag :type_none, :for => label_for_attr(w, 'type_issuetracker'), :class => "label_radio none" do
+      %div.choose.row
+        = label_tag :type_none, :for => label_for_attr(w, 'type_issuetracker'), :class => "label_radio none span2" do
           = w.radio_button :type, "IssueTracker", 'data-section' => 'none'
           (None)
         - IssueTracker.subclasses.each do |tracker|
-          = label_tag "type_#{tracker.label}:", :for => label_for_attr(w, "type_#{tracker.name.downcase.gsub(':','')}"), :class => "label_radio #{tracker.label}" do
+          = label_tag "type_#{tracker.label}:", :for => label_for_attr(w, "type_#{tracker.name.downcase.gsub(':','')}"), :class => "label_radio #{tracker.label} span2" do
             = w.radio_button :type, tracker.name, 'data-section' => tracker.label
             = tracker.name[/::(.*)Tracker/,1].titleize
 

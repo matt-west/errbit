@@ -21,7 +21,7 @@ function activateNestedForms() {
 
     makeNestedItemsDestroyable(wrapper);
 
-    var addLink = $('<a/>').text('add another').addClass('add-nested');
+    var addLink = $('<a/>').text('Add another').addClass('add-nested btn btn-primary');
     addLink.click(appendNestedItem);
     wrapper.append(addLink);
   });
@@ -31,7 +31,7 @@ function activateNestedForms() {
 function makeNestedItemsDestroyable(wrapper) {
   wrapper.find('.nested').each(function(){
     var nestedItem = $(this);
-    var destroyLink = $('<a/>').text('remove').addClass('remove-nested');
+    var destroyLink = $('<a/>').text('Remove').addClass('remove-nested btn btn-warning');
     destroyLink.css('float','right');
     nestedItem.find('label').first().before(destroyLink);
   })
