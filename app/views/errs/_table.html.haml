@@ -48,9 +48,10 @@
   = paginate errs
   .btn-toolbar
     .btn-group
-      %button{ :id => 'merge_errs', :class => 'button btn', 'data-action' => merge_several_errs_path } Merge
-      %button{ :id => 'unmerge_errs', :class => 'button btn', 'data-action' => unmerge_several_errs_path } Unmerge
-      %button{ :id => 'resolve_errs', :class => 'button btn', 'data-action' => resolve_several_errs_path} Resolve
-      %button{ :id => 'unresolve_errs', :class => 'button btn', 'data-action' => unresolve_several_errs_path} Unresolve
-      %button{ :id => 'delete_errs', :class => 'button btn', 'data-action' => destroy_several_errs_path} Delete
+      .tab-bar
+        %button{ :id => 'merge_errs', :class => 'button btn', 'data-action' => merge_several_errs_path } Merge
+        %button{ :id => 'unmerge_errs', :class => 'button btn', 'data-action' => unmerge_several_errs_path } Unmerge
+        %button{ :id => 'resolve_errs', :class => 'button btn', 'data-action' => resolve_several_errs_path} Resolve
+        %button{ :id => 'unresolve_errs', :class => 'button btn', 'data-action' => unresolve_several_errs_path} Unresolve
+        %button{ :id => 'delete_errs', :class => 'button btn', 'data-action' => destroy_several_errs_path} Delete
 

@@ -40,9 +40,10 @@ $(function() {
 
     $('.notice-pagination').each(function() {
       $('.notice-pagination a').pjax('#content', { timeout: 2000});
+
       $('#content').bind('pjax:start',  function() {
-  $('.notice-pagination-loader').css("visibility", "visible");
-        currentTab = $('.tab-bar ul li a.button.active').attr('rel');
+        $('.notice-pagination-loader').css("visibility", "visible");
+        currentTab = $('.tab-bar ul li .button.active').attr('rel');
       });
 
       $('#content').bind('pjax:end',  function() {
@@ -52,25 +53,28 @@ $(function() {
   }
 
   function activateTabbedPanels() {
-    $('.tab-bar a').each(function(){
+    $('.tab-bar a, .tab-bar .button').each(function(){
       var tab = $(this);
       var panel = $('#'+tab.attr('rel'));
       panel.addClass('panel');
       panel.find('h3').hide();
     });
 
-    $('.tab-bar a').click(function(){
+    $('.tab-bar a, .tab-bar .button').click(function(){
       activateTab($(this));
       return(false);
     });
-    activateTab($('.tab-bar ul li a.button[rel=' + currentTab + ']'));
+
+    var btn = $('.tab-bar .button[rel=' + currentTab + ']');
+
+    activateTab(btn);
   }
 
   function activateTab(tab) {
     tab = $(tab);
     var panel = $('#'+tab.attr('rel'));
 
-    tab.closest('.tab-bar').find('a.active').removeClass('active');
+    tab.closest('.tab-bar').find('.active').removeClass('active');
     tab.addClass('active');
 
     // If clicking into 'backtrace' tab, hide external backtrace
@@ -101,17 +105,17 @@ $(function() {
 
   function bindRequiredPasswordMarks() {
     $('#user_github_login').keyup(function(event) {
-      toggleRequiredPasswordMarks(this)
+      toggleRequiredPasswordMarks(this);
     });
   }
 
   function toggleRequiredPasswordMarks(input) {
-      if($(input).val() == "") {
-        $('#user_password').parent().attr('class', 'required')
-        $('#user_password_confirmation').parent().attr('class', 'required')
+      if($(input).val() === "") {
+        $('#user_password').parent().attr('class', 'required');
+        $('#user_password_confirmation').parent().attr('class', 'required');
       } else {
-        $('#user_password').parent().attr('class', '')
-        $('#user_password_confirmation').parent().attr('class', '')
+        $('#user_password').parent().attr('class', '');
+        $('#user_password_confirmation').parent().attr('class', '');
       }
   }
 
