@@ -1,5 +1,5 @@
 - any_issue_links = errs.any?{|e| e.issue_link.present? && e.issue_link != 'pending' }
-=form_tag( {}, :id => 'app-errors') do
+=form_tag({}, :id => 'app-errors') do
   %table.errs.selectable.table.table-striped
     %thead
       %tr

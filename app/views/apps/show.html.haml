@@ -30,69 +30,88 @@
       %i{ :class => 'icon-chevron-left icon-white'}
       Back To Apps
 
-%h3#watchers_toggle
-  Watchers
-  %span.click_span (show/hide)
-#watchers_div
-  - if @app.notify_all_users
-    %table.watchers
-      %thead
-        %tr
-          %th All users will be notified when something happens.
-  - else
-    %table.watchers.table.table-striped
-      %thead
-        %tr
-          %th User or Email
-      %tbody
-        - @app.watchers.each do |watcher|
+.well
+  .row
+    %h3#watchers_toggle.span2
+      Watchers
+    %div.span2
+      %div{ :class => 'toggle basic watchers', :data => { :enabled => 'Hide', :disabled => 'Show', :toggle => 'toggle' } }
+        %input{ :type => 'checkbox', :value => 1, :name => 'toggle-watchers', :class => 'checkbox'}
+        %label{ :class => 'check', :for => 'toggle-watchers'}
+
+  #watchers_div
+    - if @app.notify_all_users
+      %table.watchers
+        %thead
           %tr
-            %td= watcher.label
-        - if @app.watchers.none?
+            %th All users will be notified when something happens.
+    - else
+      %table.watchers.table.table-striped
+        %thead
           %tr
-            %td
-              %em Sadly, no one is watching this app
+            %th User or Email
+        %tbody
+          - @app.watchers.each do |watcher|
+            %tr
+              %td= watcher.label
+          - if @app.watchers.none?
+            %tr
+              %td
+                %em Sadly, no one is watching this app
+
 
 - if @app.github_repo?
-  %h3#repository_toggle
-    Repository
-    %span.click_span (show/hide)
-  #repository_div
-    %table.repository.table.table-striped
-      %thead
-        %tr
-          %th GitHub Repo
-      %tbody
-        %tr
-          %td= link_to(@app.github_repo, @app.github_url, :target => '_blank')
+  .well
+    .row
+      %h3#repository_toggle.span2
+        Repository
+      %div.span2
+        %div{ :class => 'toggle basic repository', :data => { :enabled => 'Hide', :disabled => 'Show', :toggle => 'toggle' } }
+          %input{ :type => 'checkbox', :value => 1, :name => 'toggle-repository', :class => 'checkbox'}
+          %label{ :class => 'check', :for => 'toggle-repository'}
 
-%h3#deploys_toggle
-  Latest Deploys
-  %span.click_span (show/hide)
-#deploys_div
-  - if @deploys.any?
-    %table.deploys.table.table-striped
-      %thead
-        %tr
-          %th When
-          %th Environment
-          %th Who
-          %th Message
-          %th Repository
-          %th Revision
-
-      %tbody
-        - @deploys.each do |deploy|
+    #repository_div
+      %table.repository.table.table-striped
+        %thead
           %tr
-            %td.when #{deploy.created_at.to_s(:micro)}
-            %td.environment #{deploy.environment}
-            %td.who #{deploy.username}
-            %td.message #{deploy.message}
-            %td.repository #{deploy.repository}
-            %td.revision #{deploy.short_revision}
-    = link_to "All Deploys (#{@app.deploys.count})", app_deploys_path(@app), :class => 'button'
-  - else
-    %h3 No deploys
+            %th GitHub Repo
+        %tbody
+          %tr
+            %td= link_to(@app.github_repo, @app.github_url, :target => '_blank')
+
+.well
+  %div.row
+    %h3#deploys_toggle.span2
+      Latest Deploys
+    %div.span2
+      %div{ :class => 'toggle basic deploys', :data => { :enabled => 'Hide', :disabled => 'Show', :toggle => 'toggle' } }
+        %input{ :type => 'checkbox', :value => 1, :name => 'toggle-deploys', :class => 'checkbox'}
+        %label{ :class => 'check', :for => 'toggle-deploys'}
+
+  #deploys_div
+    - if @deploys.any?
+      %table.deploys.table.table-striped
+        %thead
+          %tr
+            %th When
+            %th Environment
+            %th Who
+            %th Message
+            %th Repository
+            %th Revision
+
+        %tbody
+          - @deploys.each do |deploy|
+            %tr
+              %td.when #{deploy.created_at.to_s(:micro)}
+              %td.environment #{deploy.environment}
+              %td.who #{deploy.username}
+              %td.message #{deploy.message}
+              %td.repository #{deploy.repository}
+              %td.revision #{deploy.short_revision}
+      = link_to "All Deploys (#{@app.deploys.count})", app_deploys_path(@app), :class => 'button'
+    - else
+      %h3 No deploys
 
 - if @app.problems.any?
   %h3.clear Errors
