@@ -21,6 +21,10 @@ RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
   config.alias_example_to :fit, :focused => true
 
+  config.before(:all) do
+    Problem.index_name('test_' + Problem.model_name.plural)
+  end
+
   config.before(:each) do
     DatabaseCleaner[:mongoid].strategy = :truncation
     DatabaseCleaner.clean
@@ -28,4 +32,5 @@ RSpec.configure do |config|
   config.include WebMock::API
 end
 
+Errbit::Config.elasticsearch_enabled = false
 OmniAuth.config.test_mode = true

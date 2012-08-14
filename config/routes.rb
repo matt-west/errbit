@@ -21,6 +21,7 @@ Errbit::Application.routes.draw do
       post :merge_several
       post :unmerge_several
       get :all
+      get :search
     end
   end
 
@@ -34,6 +35,10 @@ Errbit::Application.routes.draw do
         put :unresolve
         post :create_issue
         delete :unlink_issue
+      end
+
+      collection do
+        get :search
       end
     end
 

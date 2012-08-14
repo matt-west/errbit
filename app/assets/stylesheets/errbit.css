@@ -122,6 +122,26 @@ a.action  { float: right; font-size: 0.9em;}
   -webkit-border-top-right-radius: 12px;
   border: 1px solid #bbb;
 }
+#nav-bar li.search {
+  background-color: transparent;
+  border: none; 
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  -moz-border-top-left-radius: 0;
+  -moz-border-top-right-radius: 0;
+  -webkit-border-top-left-radius: 0;
+  -webkit-border-top-right-radius: 0;
+}
+#nav-bar li.search input { 
+  padding: 0 5px; 
+  margin: 0; 
+  width: auto; 
+  border: none; 
+  line-height: 34px; 
+  position: relative; 
+  top: -15px;
+  left: 15px;
+}
 #nav-bar li.active {
   border-color: #fff;
   background: #FFF url(images/button-bg.png) 0 -2px repeat-x;

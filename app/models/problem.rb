@@ -42,6 +42,24 @@ class Problem
   scope :ordered, order_by(:last_notice_at.desc)
   scope :for_apps, lambda {|apps| where(:app_id.in => apps.all.map(&:id))}
 
+  include Tire::Model::Search
+  mapping do
+    indexes :app_id,        :index => :not_analyzed
+    indexes :app_name,      :index => :not_analyzed
+    indexes :error_class,   :analyzer => :snowball
+    indexes :where,         :analyzer => :snowball
+    indexes :message,       :analyzer => :snowball
+    indexes :environment,   :index => :not_analyzed
+    indexes :resolved,      :index => :not_analyzed
+    indexes :last_notice_at, :index => :not_analyzed
+  end
+
+  after_save    :update_index, :if => lambda { Errbit::Config.elasticsearch_enabled }
+  after_destroy :update_index, :if => lambda { Errbit::Config.elasticsearch_enabled }
+
+  def update_index
+    tire.update_index
+  end
 
   def self.in_env(env)
     env.present? ? where(:environment => env) : scoped

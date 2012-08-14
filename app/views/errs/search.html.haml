@@ -1,0 +1,7 @@
+- content_for :title, 'Search Results'
+- content_for :action_bar do
+  - if params[:resolved].present?
+    = link_to 'hide resolved', params.except(:resolved), {:class => 'button'}
+  - else
+    = link_to 'show resolved', params.merge({:resolved => true}), {:class => 'button'}
+= render 'table', :errs => @problems
