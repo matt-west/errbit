@@ -1,7 +1,10 @@
 - if current_user
   .nav-collapse
     %ul{:id => 'session-links', :class => 'nav pull-right'}
-      %li.divider-vertical
-      %li= link_to 'Sign out', destroy_session_path(:user), :id => 'sign-out'
-      %li.divider-vertical
-      %li= link_to 'Edit profile', edit_user_path(current_user), :id => 'edit-profile'
+      %li.dropdown.session
+        %a{ :href => '#', :class => 'dropdown-toggle', :data => { :toggle => 'dropdown' } }
+          = current_user.email
+          %b.caret
+        %ul.dropdown-menu
+          %li= link_to 'Edit profile', edit_user_path(current_user), :id => 'edit-profile'
+          %li= link_to 'Sign out', destroy_session_path(:user), :id => 'sign-out'
