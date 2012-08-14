@@ -14,7 +14,7 @@
   %body{:id => controller.controller_name, :class => controller.action_name}
     %div{ :id => 'header', :class=> 'navbar navbar-fixed-top'}
       .navbar-inner
-        .container
+        .container-fluid
           %button{ :class => 'btn btn-navbar', :data => { :toggle => 'collapse', :target => '.nav-collapse' } }
             %span{ :class => 'icon-bar' }
             %span{ :class => 'icon-bar' }
@@ -27,7 +27,7 @@
           = render 'shared/navigation' if current_user
           = render 'shared/session'
 
-    .container
+    .container-fluid
       %header{ :class => 'jumbotron subhead' }
         %h1= yield :title
         %p.lead= yield :meta
