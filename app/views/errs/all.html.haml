@@ -1,4 +1,9 @@
 - content_for :title, 'All Errors'
 - content_for :action_bar do
-  = link_to 'Hide Resolved', errs_path, :class => 'button btn btn-primary'
+  .btn-toolbar
+    .btn-group
+      %a{ :class => 'btn btn-inverse', :href => errs_path }
+        %i{ :class => 'icon-eye-open icon-white' }
+        Show Only Unresolved Errors
+
 = render 'table', :errs => @problems

@@ -65,7 +65,7 @@
           %i{ :class => 'icon-thumbs-down icon-white'}
           Mark Unresolved
 
-      %a{ :class => 'btn btn-danger pull-right', :href => '#delete-confirm-all', :data => { :toggle => 'modal', :id => @app.id } }
+      %a{ :class => 'btn btn-danger pull-right', :href => '#delete-confirm-all', :data => { :toggle => 'modal' } }
         %i{ :class => 'icon-trash icon-white' }
         Delete
 
@@ -75,7 +75,7 @@
     %a{ :class => 'close', :data => { :dismiss => 'modal' } }
     %h2= "Delete Errors?"
   .modal-body
-    %p= "Are you sure you wish to delete #{@app.name} errors?"
+    %p= "Are you sure you wish to delete these errors?"
   .modal-footer
     %button{ :id => 'delete_errs', :class => 'app-err-button btn btn-danger', :name => 'commit', :data => { :action => destroy_several_errs_path} }
       %i{ :class => 'icon-trash icon-white'}
