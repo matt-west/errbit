@@ -39,6 +39,10 @@ user_has_username: false
 # but you want to leave a short comment.
 allow_comments_with_issue_tracker: true
 
+# Index any problems in ElasticSearch
+elasticsearch_enabled: true
+elasticsearch_url: http://localhost:9200
+
 # Setup your deploy options for capistrano.
 deployment:
   hosts:
