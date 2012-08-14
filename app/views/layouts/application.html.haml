@@ -15,16 +15,26 @@
     %div{ :id => 'header', :class=> 'navbar navbar-fixed-top'}
       .navbar-inner
         .container
-          = link_to 'Errbit', root_path, :id => 'site-name', :class => 'brand'
+          %button{ :class => 'btn btn-navbar', :data => { :toggle => 'collapse', :target => '.nav-collapse' } }
+            %span{ :class => 'icon-bar' }
+            %span{ :class => 'icon-bar' }
+            %span{ :class => 'icon-bar' }
+
+          %a{ :class => 'brand', :id => 'site-name', :href => root_path}
+            %i{ :class => 'icon-fire icon-white' }
+            ErrBit
+
           = render 'shared/navigation' if current_user
           = render 'shared/session'
+
     .container
       %header{ :class => 'jumbotron subhead' }
         %h1= yield :title
         %p.lead= yield :meta
         - if (action_bar = yield(:action_bar)).present?
-          %div{ :id => 'action-bar', :class => 'well' }
+          %div{ :id => 'action-bar' }
             = action_bar
+
       #content
         = render 'shared/flash_messages'
         = yield

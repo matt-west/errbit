@@ -20,11 +20,11 @@
           Delete
       - if @all_errs
         %a{ :class => 'btn btn-inverse', :href => app_path(@app) }
-          %i{ :class => 'icon-eye-open icon-white' }
+          %i{ :class => 'icon-eye-close icon-white' }
           Show Only Unresolved Errors
       - else
         %a{ :class => 'btn btn-info', :href => app_path(@app, :all_errs => true) }
-          %i{ :class => 'icon-fire icon-white' }
+          %i{ :class => 'icon-eye-open icon-white' }
           Show All Errors
     %a{ :class => 'btn btn-inverse pull-right', :href => apps_path }
       %i{ :class => 'icon-chevron-left icon-white'}

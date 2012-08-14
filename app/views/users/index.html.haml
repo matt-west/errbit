@@ -6,21 +6,21 @@
         %i{ :class => 'icon-plus-sign icon-white' }
         Add New User
 
-%table.table.table-striped
-  %thead
-    %tr
-      %th Name
-      - if Errbit::Config.user_has_username
-        %th Username
-      %th.main Email
-      %th Admin?
-  %tbody
-    - @users.each do |user|
+.well
+  %table.table.table-striped
+    %thead
       %tr
-        %td.nowrap= link_to user.name, user_path(user)
+        %th Name
         - if Errbit::Config.user_has_username
-          %td= user.username
-        %td= user.email
-        %td= user.admin? ? 'Y' : 'N'
-= paginate @users
-
+          %th Username
+        %th.main Email
+        %th Admin?
+    %tbody
+      - @users.each do |user|
+        %tr
+          %td.nowrap= link_to user.name, user_path(user)
+          - if Errbit::Config.user_has_username
+            %td= user.username
+          %td= user.email
+          %td= user.admin? ? 'Y' : 'N'
+  = paginate @users
