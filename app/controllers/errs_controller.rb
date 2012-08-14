@@ -96,6 +96,14 @@ class ErrsController < ApplicationController
     redirect_to app_path(@app)
   end
 
+  def unresolve
+    @problem.unresolve!
+    flash[:success] = 'Bad news everyone! The error has been unresolved.'
+    redirect_to :back
+  rescue ActionController::RedirectBackError
+    redirect_to app_path(@app)
+  end
+
   def resolve_several
     @selected_problems.each(&:resolve!)
     flash[:success] = "Great news everyone! #{pluralize(@selected_problems.count, 'err has', 'errs have')} been resolved."

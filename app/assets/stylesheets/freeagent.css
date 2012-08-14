@@ -47,3 +47,24 @@ div.issue_tracker.nested label.label_radio {
 .image_preloader {
   display: none;
 }
+
+
+/* Notices Pagination */
+/*.notice-pagination {
+  float: left;
+  margin-right: 10px;
+}
+ */
+
+.notice-pagination-loader {
+  visibility: hidden;
+  float: left;
+  margin-right: 2em;
+}
+.notice-pagination-loader img {
+  vertical-align: middle
+}
+
+.pager .disabled {
+  visibility: hidden;
+}

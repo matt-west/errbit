@@ -13,8 +13,10 @@
         - if any_issue_links
           %th Issue
         %th Resolve
+
     %tbody
       - errs.each do |problem|
+
         %tr{:class => problem.resolved? ? 'resolved' : 'unresolved'}
           %td.select
             = check_box_tag "problems[]", problem.id, @selected_problems.member?(problem.id.to_s)
@@ -41,7 +43,19 @@
             %td.issue_link
               - if problem.app.issue_tracker_configured? && problem.issue_link.present? && problem.issue_link != 'pending'
                 = link_to image_tag("#{problem.issue_type}_goto.png"), problem.issue_link, :target => "_blank"
-          %td.resolve= link_to image_tag("thumbs-up.png"), resolve_app_err_path(problem.app, problem), :title => "Resolve", :method => :put, :data => { :confirm => err_confirm }, :class => 'resolve' if problem.unresolved?
+
+
+          %td.resolve
+            -if problem.unresolved?
+              %a{ :class => 'resolve btn btn-primary', :href => resolve_app_err_path(problem.app, problem), :data => { :method => 'put' } }
+                %i{ :class => 'icon-thumbs-up icon-white'}
+                Resolve
+            -else
+              %a{ :class => 'resolve btn btn-warning', :href => unresolve_app_err_path(problem.app, problem), :data => { :method => 'put' } }
+                %i{ :class => 'icon-thumbs-up icon-white'}
+                Unresolve
+
+
       - if errs.none?
         %tr
           %td{:colspan => (any_issue_links ? 8 : 7)}

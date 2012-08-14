@@ -6,11 +6,16 @@
 -#    remote:        data-remote
 -#    paginator:     the paginator that renders the pagination tags inside
 = paginator.render do
-  %nav.pagination
-    = prev_page_tag
-    - each_page do |page|
-      - if page.left_outer? || page.right_outer? || page.inside_window?
-        = page_tag page
-      - elsif !page.was_truncated?
-        = gap_tag
-    = next_page_tag
+  %nav.pagination.pagination-centered
+    %ul
+      %li
+        = prev_page_tag
+      - each_page do |page|
+        - if page.left_outer? || page.right_outer? || page.inside_window?
+          %li
+            = page_tag page
+          - elsif !page.was_truncated?
+          %li
+            = gap_tag
+      %li
+        = next_page_tag
