@@ -10,6 +10,12 @@ body {
   }
 }
 
+@media (max-width: 768px) {
+  body {
+    padding-top: 0;
+  }
+}
+
 tr.resolved {
   opacity: 0.3;
   transition: opacity 1s;
