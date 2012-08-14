@@ -1,9 +1,24 @@
 - content_for :title, @user.name
 - content_for :action_bar do
-  = render 'shared/link_github_account', :user => @user
-  %span= link_to('Add a New User', new_user_path, :class => 'add btn btn-primary')
-  = link_to 'Edit', edit_user_path(@user), :class => 'button btn btn-info'
-  = link_to 'Destroy', user_path(@user), :method => :delete, :data => { :confirm => 'Seriously?' }, :class => 'button btn btn-warning'
+  .btn-toolbar
+    .btn-group
+      = render 'shared/link_github_account', :user => @user
+
+      %a{ :class => 'btn btn-primary', :href => new_user_path }
+        %i{ :class => 'icon-plus-sign icon-white' }
+        Add New User
+
+      %a{ :class => 'btn btn-primary', :href => edit_user_path(@user) }
+        %i{ :class => 'icon-edit icon-white' }
+        Edit
+
+      %a{ :class => 'btn btn-danger', :href => '#delete-confirm', :data => { :toggle => 'modal', :id => @user.id } }
+        %i{ :class => 'icon-trash icon-white' }
+        Delete
+
+    %a{ :class => 'btn btn-inverse pull-right', :href => (request.env['HTTP_REFERER'] ? :back : app_users_path(@app))}
+      %i{ :class => 'icon-chevron-left icon-white'}
+      Back To Users
 
 
 %table.single_user.table.table-striped
@@ -25,3 +40,13 @@
     %th Created
     %td= @user.created_at.to_s(:micro)
 
+
+%div.modal.fade#delete-confirm
+  .modal-header
+    %a{ :class => 'close', :data => { :dismiss => 'modal' } }
+    %h2= "Delete #{@user.name}"
+  .modal-body
+    %p= "Are you sure you wish to delete #{@user.name}?"
+  .modal-footer
+    =link_to 'Delete', user_path(@user), :method => :delete, :class => 'button btn btn-danger'
+    %a{ :href => '#', :class => 'btn btn-primary', :data => { :dismiss => 'modal' } } Cancel
