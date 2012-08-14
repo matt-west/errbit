@@ -34,8 +34,9 @@ $(function() {
                              "?copy_attributes_from=" + $(this).val();
     });
 
-    $('input[type=submit][data-action]').click(function() {
-      $(this).closest('form').attr('action', $(this).attr('data-action'));
+    $('button.app-err-button').on('click', function() {
+      $('form#app-errors').attr('action', $(this).attr('data-action'));
+      $('form#app-errors').submit();
     });
 
     $('.notice-pagination').each(function() {

@@ -1,5 +1,5 @@
 - any_issue_links = errs.any?{|e| e.issue_link.present? && e.issue_link != 'pending' }
-=form_tag do
+=form_tag( {}, :id => 'app-errors') do
   %table.errs.selectable.table.table-striped
     %thead
       %tr
@@ -46,10 +46,38 @@
           %td{:colspan => (any_issue_links ? 8 : 7)}
             %em No errs here
   = paginate errs
-  .btn-toolbar.tab-bar
-    %input{ :type => 'submit', :id => 'merge_errs', :class => 'button btn', 'data-action' => merge_several_errs_path, :name => 'commit', :value => 'Merge' }
-    %input{ :type => 'submit', :id => 'unmerge_errs', :class => 'button btn', 'data-action' => unmerge_several_errs_path, :name => 'commit', :value => 'Unmerge' }
-    %input{ :type => 'submit', :id => 'resolve_errs', :class => 'button btn', 'data-action' => resolve_several_errs_path, :name => 'commit', :value => 'Resolve' }
-    %input{ :type => 'submit', :id => 'unresolve_errs', :class => 'button btn', 'data-action' => unresolve_several_errs_path, :name => 'commit', :value => 'Unresolve' }
-    %input{ :type => 'submit', :id => 'delete_errs', :class => 'button btn', 'data-action' => destroy_several_errs_path, :name => 'commit', :value => 'Delete'}
+  .well
+    .btn-toolbar
+      .btn-group
+        %button{ :id => 'merge_errs', :class => 'app-err-button btn btn-primary', :name => 'commit', :data => { :action => merge_several_errs_path} }
+          %i{ :class => 'icon-random icon-white'}
+          Merge
 
+        %button{ :id => 'unmerge_errs', :class => 'app-err-button btn btn-primary', :name => 'commit', :data => { :action => unmerge_several_errs_path} }
+          %i{ :class => 'icon-magnet icon-white'}
+          Unmerge
+
+        %button{ :id => 'resolve_errs', :class => 'app-err-button btn btn-success', :name => 'commit', :data => { :action => resolve_several_errs_path} }
+          %i{ :class => 'icon-thumbs-up icon-white'}
+          Mark Resolved
+
+        %button{ :id => 'unresolve_errs', :class => 'app-err-button btn btn-warning', :name => 'commit', :data => { :action => unresolve_several_errs_path} }
+          %i{ :class => 'icon-thumbs-down icon-white'}
+          Mark Unresolved
+
+      %a{ :class => 'btn btn-danger pull-right', :href => '#delete-confirm-all', :data => { :toggle => 'modal', :id => @app.id } }
+        %i{ :class => 'icon-trash icon-white' }
+        Delete
+
+
+%div.modal.fade#delete-confirm-all
+  .modal-header
+    %a{ :class => 'close', :data => { :dismiss => 'modal' } }
+    %h2= "Delete Errors?"
+  .modal-body
+    %p= "Are you sure you wish to delete #{@app.name} errors?"
+  .modal-footer
+    %button{ :id => 'delete_errs', :class => 'app-err-button btn btn-danger', :name => 'commit', :data => { :action => destroy_several_errs_path} }
+      %i{ :class => 'icon-trash icon-white'}
+      Delete
+    %a{ :href => '#', :class => 'btn btn-primary', :data => { :dismiss => 'modal' } } Cancel
