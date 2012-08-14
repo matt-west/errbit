@@ -16,12 +16,20 @@
   .btn-toolbar
     .btn-group
       - if @problem.unresolved?
-        =link_to 'Resolve', resolve_app_err_path(@app, @problem), :method => :put, :data => { :confirm => err_confirm }, :class => 'resolve btn btn-primary'
+        %a{ :class => 'resolve btn btn-primary', :href => '#delete-confirm-resolved', :data => { :toggle => 'modal' } }
+          %i{ :class => 'icon-thumbs-up icon-white' }
+          Resolve
+
       - if current_user.authentication_token
-        =link_to 'iCal', app_err_path(:app_id => @app.id, :id => @problem.id, :format => "ics", :auth_token => current_user.authentication_token), :class => "calendar_link btn btn-primary"
+        %a{ :class => 'calendar_link btn btn-primary', :href => app_err_path(:app_id => @app.id, :id => @problem.id, :format => "ics", :auth_token => current_user.authentication_token)}
+          %i{ :class => 'icon-calendar icon-white'}
+          iCal
+
       = render "issue_tracker_links"
 
-    =link_to 'Back To Errors', (request.env['HTTP_REFERER'] ? :back : app_errs_path(@app)), :class => 'up btn pull-right'
+    %a{ :class => 'btn btn-inverse pull-right', :href => errs_path }
+      %i{ :class => 'icon-chevron-left icon-white'}
+      Back To Errors
 
 - if Errbit::Config.allow_comments_with_issue_tracker || !@app.issue_tracker_configured? || @problem.comments.any?
   - content_for :comments do
@@ -43,37 +51,59 @@
           = comment_form.text_area :body, :style => "width: 100%; height: 80px;"
           = comment_form.submit "Save Comment", :class => 'btn btn-primary'
 
-%h4= @notice.try(:message)
+.well
+  %h4= @notice.try(:message)
 
-= paginate @notices, :param_name => :notice, :theme => :notices
+  = paginate @notices, :param_name => :notice, :theme => :notices
 
 .btn-toolbar
   .btn-group.tab-bar
-    =link_to 'Summary', '#summary', :rel => 'summary', :class => 'button btn'
-    =link_to 'Backtrace', '#backtrace', :rel => 'backtrace', :class => 'button btn'
+    %a{ :class => 'button btn btn-info', :rel => 'summary', :href => '#summary' }
+      %i{ :class => 'icon-file icon-white'}
+      Summary
+
+    %a{ :class => 'button btn btn-info', :rel => 'backtrace', :href => '#backtrace' }
+      %i{ :class => 'icon-fire icon-white'}
+      Backtrace
+
     - if @notice && @notice.user_attributes.present?
-      =link_to 'User Details', '#user_attributes', :rel => 'user_attributes', :class => 'button btn'
-    =link_to 'Environment', '#environment', :rel => 'environment', :class => 'button btn'
-    =link_to 'Parameters', '#params', :rel => 'params', :class => 'button btn'
-    =link_to 'Session', '#session', :rel => 'session', :class => 'button btn'
+      %a{ :class => 'button btn btn-info', :rel => 'user_attributes', :href => '#user_attributes' }
+        %i{ :class => 'icon-user icon-white'}
+        User Details
+
+    %a{ :class => 'button btn btn-info', :rel => 'environment', :href => '#environment' }
+      %i{ :class => 'icon-globe icon-white'}
+      Environment
+
+    %a{ :class => 'button btn btn-info', :rel => 'params', :href => '#params' }
+      %i{ :class => 'icon-tags icon-white'}
+      Parameters
+
+    %a{ :class => 'button btn btn-info', :rel => 'session', :href => '#session' }
+      %i{ :class => 'icon-road icon-white'}
+      Session
 
 - if @notice
   #summary
     %h3 Summary
-    = render 'notices/summary', :notice => @notice, :problem => @problem
+    .well
+      = render 'notices/summary', :notice => @notice, :problem => @problem
 
   #backtrace
     %h3 Backtrace
-    = render 'notices/backtrace', :lines => @notice.backtrace
+    .well
+      = render 'notices/backtrace', :lines => @notice.backtrace
 
   - if @notice.user_attributes.present?
     #user_attributes
       %h3 User Details
-      = render 'notices/user_attributes', :user => @notice.user_attributes
+      .well
+        = render 'notices/user_attributes', :user => @notice.user_attributes
 
   #environment
     %h3 Environment
-    = render 'notices/environment', :notice => @notice
+    .well
+      = render 'notices/environment', :notice => @notice
 
   #params
     %h3 Parameters
@@ -82,3 +112,16 @@
   #session
     %h3 Session
     = render 'notices/session', :notice => @notice
+
+
+%div.modal.fade#delete-confirm-resolved
+  .modal-header
+    %a{ :class => 'close', :data => { :dismiss => 'modal' } }
+    %h2= "Confirm Resolved?"
+  .modal-body
+    %p= "Confirm this issue has been resolved?"
+  .modal-footer
+    %a{ :id => 'resolve', :class => 'btn btn-danger', :data => { :method => 'put' }, :href => resolve_app_err_path(@app, @problem) }
+      %i{ :class => 'icon-thumbs-up icon-white'}
+      Confirm
+    %a{ :href => '#', :class => 'btn btn-primary', :data => { :dismiss => 'modal' } } Cancel
