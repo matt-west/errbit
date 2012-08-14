@@ -5,6 +5,7 @@
     %li.errs{:class => active_if_here(:errs)}= link_to 'Errors', errs_path
     - if user_signed_in? && current_user.admin?
       %li.users{:class => active_if_here(:users)}= link_to 'Users', users_path
-  %div.clear
-  = form_tag search_path, {:class => 'navbar-search pull-left', :method => :get} do
-    %input{:type => 'text', :class => 'search-query span2', :placeholder => 'Search', :name => 'terms', :value => @search.present? ? @search.terms : ''}
+    - if Errbit::Config.elasticsearch_enabled
+      %li.search
+        = form_tag search_path, {:method => :get, :id => 'search'} do
+          %input{:type => 'text', :class => 'search-query span2', :placeholder => 'Search', :name => 'terms', :value => @search.present? ? @search.terms : ''}

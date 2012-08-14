@@ -21,7 +21,7 @@ class ErrsController < ApplicationController
   end
 
   def search
-    raise "Elastic Search is not enabled" unless Errbit::Config.elastic_search_enabled
+    raise "Elastic Search is not enabled" unless Errbit::Config.elasticsearch_enabled
     visible_apps = current_user.admin? ? App.all : current_user.apps
     if params[:app_id]
       visible_apps = visible_apps.where(:_id => params[:app_id])
