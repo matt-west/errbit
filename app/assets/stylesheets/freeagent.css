@@ -68,3 +68,13 @@ div.issue_tracker.nested label.label_radio {
 .pager .disabled {
   visibility: hidden;
 }
+
+footer {
+   position:fixed;
+   left:0;
+   bottom:0;
+   height:30px;
+   width:100%;
+   background:#000;
+   color: #fff;
+}
