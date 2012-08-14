@@ -1,6 +1,11 @@
 - content_for :title, 'Apps'
 - content_for :action_bar do
-  %span= link_to('Add a New App', new_app_path, :class => 'add btn btn-primary') if current_user.admin?
+  .btn-toolbar
+    .btn-group
+      - if current_user.admin?
+        %a{ :class => 'btn btn-primary', :href => new_app_path }
+          %i{ :class => 'icon-plus-sign icon-white' }
+          Add New App
 
 %table.table.table-striped.apps
   %thead

@@ -1,6 +1,10 @@
 - content_for :title, 'Users'
 - content_for :action_bar do
-  %span= link_to('Add a New User', new_user_path, :class => 'add btn btn-primary')
+  .btn-toolbar
+    .btn-group
+      %a{ :class => 'btn btn-primary', :href => new_user_path }
+        %i{ :class => 'icon-plus-sign icon-white' }
+        Add New User
 
 %table.table.table-striped
   %thead

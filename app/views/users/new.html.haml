@@ -1,8 +1,17 @@
 - content_for :title, 'New User'
-- content_for :action_bar, link_to('Cancel', users_path, :class => 'button btn btn-warning')
+- content_for :action_bar do
+  .btn-toolbar
+    .btn-group
+
+    %a{ :class => 'btn btn-inverse pull-right', :href => users_path }
+      %i{ :class => 'icon-chevron-left icon-white'}
+      Cancel
 
 = form_for @user do |f|
 
   = render 'fields', :f => f
 
-  %div.buttons= f.submit 'Add User', :class => 'btn btn-primary'
+  .btn-toolbar
+    %button{ :class => 'btn btn-primary' }
+      %i{ :class => 'icon-ok-sign icon-white' }
+      Add User

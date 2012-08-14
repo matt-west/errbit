@@ -22,6 +22,7 @@ function activateNestedForms() {
     makeNestedItemsDestroyable(wrapper);
 
     var addLink = $('<a/>').text('Add another').addClass('add-nested btn btn-primary');
+    addLink.prepend('<i class="icon-plus-sign icon-white"></i> ');
     addLink.click(appendNestedItem);
     wrapper.append(addLink);
   });
@@ -31,10 +32,11 @@ function activateNestedForms() {
 function makeNestedItemsDestroyable(wrapper) {
   wrapper.find('.nested').each(function(){
     var nestedItem = $(this);
-    var destroyLink = $('<a/>').text('Remove').addClass('remove-nested btn btn-warning');
+    var destroyLink = $('<a/>').text('Remove').addClass('remove-nested btn btn-danger');
+    destroyLink.prepend('<i class="icon-minus-sign icon-white"></i> ');
     destroyLink.css('float','right');
     nestedItem.find('label').first().before(destroyLink);
-  })
+  });
 }
 
 function appendNestedItem() {

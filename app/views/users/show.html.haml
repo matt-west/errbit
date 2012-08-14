@@ -16,7 +16,7 @@
         %i{ :class => 'icon-trash icon-white' }
         Delete
 
-    %a{ :class => 'btn btn-inverse pull-right', :href => (request.env['HTTP_REFERER'] ? :back : app_users_path(@app))}
+    %a{ :class => 'btn btn-inverse pull-right', :href => users_path }
       %i{ :class => 'icon-chevron-left icon-white'}
       Back To Users
 

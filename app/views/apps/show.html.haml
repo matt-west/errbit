@@ -9,13 +9,26 @@
   %strong API Key:
   = @app.api_key
 - content_for :action_bar do
-  - if current_user.admin?
-    = link_to 'Edit', edit_app_path(@app), :class => 'button btn btn-primary'
-    = link_to 'Destroy', app_path(@app), :method => :delete, :data => { :confirm => 'Seriously?' }, :class => 'button btn btn-danger'
-    - if @all_errs
-      = link_to 'Unresolved Errors', app_path(@app), :class => 'button btn btn-info'
-    - else
-      = link_to 'All Errors', app_path(@app, :all_errs => true), :class => 'button btn btn-info'
+  .btn-toolbar
+    .btn-group
+      - if current_user.admin?
+        %a{ :class => 'btn btn-primary', :href => edit_app_path(@app) }
+          %i{ :class => 'icon-edit icon-white' }
+          Edit
+        %a{ :class => 'btn btn-danger', :href => '#delete-confirm', :data => { :toggle => 'modal', :id => @app.id } }
+          %i{ :class => 'icon-trash icon-white' }
+          Delete
+      - if @all_errs
+        %a{ :class => 'btn btn-inverse', :href => app_path(@app) }
+          %i{ :class => 'icon-eye-open icon-white' }
+          Show Only Unresolved Errors
+      - else
+        %a{ :class => 'btn btn-info', :href => app_path(@app, :all_errs => true) }
+          %i{ :class => 'icon-fire icon-white' }
+          Show All Errors
+    %a{ :class => 'btn btn-inverse pull-right', :href => apps_path }
+      %i{ :class => 'icon-chevron-left icon-white'}
+      Back To Apps
 
 %h3#watchers_toggle
   Watchers
@@ -88,3 +101,12 @@
   %h3.clear.alert.alert-info No errs have been caught yet, make sure you setup your app
   = render 'configuration_instructions', :app => @app
 
+%div.modal.fade#delete-confirm
+  .modal-header
+    %a{ :class => 'close', :data => { :dismiss => 'modal' } }
+    %h2= "Delete #{@app.name}"
+  .modal-body
+    %p= "Are you sure you wish to delete #{@app.name}?"
+  .modal-footer
+    =link_to 'Delete', app_path(@app), :method => :delete, :class => 'button btn btn-danger'
+    %a{ :href => '#', :class => 'btn btn-primary', :data => { :dismiss => 'modal' } } Cancel

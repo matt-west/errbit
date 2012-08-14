@@ -1,11 +1,22 @@
 - content_for :title, 'Add App'
 - content_for :action_bar do
-  = link_to_copy_attributes_from_other_app
-  = link_to('Cancel', apps_path, :class => 'button btn btn-warning')
+  .btn-toolbar
+    .btn-group
+      = link_to_copy_attributes_from_other_app
+      %a{ :class => 'btn btn-primary copy_config' }
+        %i{ :class => 'icon-share icon-white' }
+        Copy Configuration From Another App
+
+    %a{ :class => 'btn btn-inverse pull-right', :href => apps_path }
+      %i{ :class => 'icon-chevron-left icon-white'}
+      Back To Apps
 
 = form_for @app do |f|
 
   = render 'fields', :f => f
 
-  %div.buttons= f.submit 'Add App', :class => 'btn btn-primary'
+  .btn-toolbar
+    %button{ :class => 'btn btn-primary' }
+      %i{ :class => 'icon-ok-sign icon-white' }
+      Add App
 

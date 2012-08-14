@@ -1,10 +1,18 @@
 - content_for :title, "Edit #{@user.name}"
 - content_for :action_bar do
-  = render 'shared/link_github_account', :user => @user
-  = link_to('Cancel', user_path(@user), :class => 'button btn btn-warning')
+  .btn-toolbar
+    .btn-group
+      = render 'shared/link_github_account', :user => @user
+
+    %a{ :class => 'btn btn-inverse pull-right', :href => user_path(@user)}
+      %i{ :class => 'icon-chevron-left icon-white'}
+      Cancel
 
 = form_for @user, :html => {:autocomplete => "off"} do |f|
   = @user.errors.full_messages.to_sentence
   = render 'fields', :f => f
 
-  %div.buttons= f.submit 'Update User', :class => 'btn btn-primary'
+  .btn-toolbar
+    %button{ :class => 'btn btn-primary' }
+      %i{ :class => 'icon-ok-sign icon-white' }
+      Update User
