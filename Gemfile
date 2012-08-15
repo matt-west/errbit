@@ -4,7 +4,11 @@ gem 'rails', '3.2.6'
 
 gem 'nokogiri'
 gem 'mongoid', '~> 2.4.10'
+
 gem 'tire'
+
+gem 'bunny'
+gem 'daemons'
 
 gem 'haml'
 gem 'htmlentities', "~> 4.3.0"
