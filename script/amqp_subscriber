@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require 'daemons'
+require 'yaml'
+
+ROOT_PATH = File.expand_path(File.join(File.dirname(__FILE__), '..'))
+require File.join(ROOT_PATH, 'lib', 'amqp', 'subscriber')
+
+daemon_settings = {
+  :monitor    => true,
+  :dir_mode   => :normal,
+  :dir        => File.join(ROOT_PATH, 'tmp', 'pids'),
+  :log_dir    => File.join(ROOT_PATH, 'log'),
+  :log_output => true,
+  :multiple   => false
+}
+
+config = YAML.load_file(File.join(ROOT_PATH, 'config', 'config.example.yml')).merge(YAML.load_file(File.join(ROOT_PATH, 'config', 'config.yml')))
+
+Daemons.run_proc('amqp-subscriber', daemon_settings) do
+  Amqp::Subscriber.new(:uri => config['amqp_uri']).subscribe(config['amqp_endpoint'])
+end
