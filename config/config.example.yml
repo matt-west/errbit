@@ -43,6 +43,10 @@ allow_comments_with_issue_tracker: true
 elasticsearch_enabled: true
 elasticsearch_url: http://localhost:9200
 
+# Receive notices via AMQP and push them to the endpoint
+amqp_uri: amqp://guest:guest@localhost:5672/airbrake
+amqp_endpoint: http://errbit.example.com/notifier_api/v2/notices
+
 # Setup your deploy options for capistrano.
 deployment:
   hosts:
