@@ -53,34 +53,34 @@
         %i{ :class => 'icon-chevron-left icon-white'}
         Back To Apps
 
-  .row-fluid
-    .span10
-      - if @app.problems.any?
-        = render 'errs/table', :errs => @problems
-        = render 'deploys/table', :deploys => @deploys
+.row-fluid
+  .span10
+    - if @app.problems.any?
+      = render 'errs/table', :errs => @problems
+      = render 'deploys/table', :deploys => @deploys
 
-      - else
-        .well
-          %h3.clear.alert.alert-warning No errs have been caught yet, make sure you setup your app
-          = render 'configuration_instructions', :app => @app
+    - else
+      .well
+        %h3.clear.alert.alert-warning No errs have been caught yet, make sure you setup your app
+        = render 'configuration_instructions', :app => @app
 
 
-    .span2
-      %table.watchers.table.table-striped.table-bordered
-        %caption
-          %h3 Watchers
-        %thead
+  .span2
+    %table.watchers.table.table-striped.table-bordered
+      %caption
+        %h3 Watchers
+      %thead
+        %tr
+          %th Watcher Username / Email
+      %tbody
+        - if @app.notify_all_users
           %tr
-            %th Watcher Username / Email
-        %tbody
-          - if @app.notify_all_users
+            %td All users will be notified when something happens.
+        - else
+          - if @app.watchers.none?
             %tr
-              %td All users will be notified when something happens.
-          - else
-            - if @app.watchers.none?
-              %tr
-                %td
-                  %em #{@app.name} has no watchers
-            - @app.watchers.each do |watcher|
-              %tr
-                %td= watcher.label
+              %td
+                %em #{@app.name} has no watchers
+          - @app.watchers.each do |watcher|
+            %tr
+              %td= watcher.label
