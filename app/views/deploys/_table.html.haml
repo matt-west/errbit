@@ -1,4 +1,6 @@
-%table.errs.table.table-striped
+%table.deploys.table.table-striped.table-bordered
+  %caption
+    %h3 Latest Deploys
   %thead
     %tr
       %th App
@@ -7,15 +9,23 @@
       %th Message
       %th Repository
       %th Revision
-  %tbody
-    - deploys.each do |deploy|
-      %tr
-        %td.app
-          = deploy.app.name
-          %span.environment= deploy.environment
-        %td.latest= deploy.created_at.to_s(:micro)
-        %td.who= deploy.username
-        %td.message= deploy.message
-        %td.repository= deploy.repository
-        %td.revision= deploy.short_revision
 
+  - if deploys.any?
+    %tbody
+      - deploys.each do |deploy|
+        %tr
+          %td.app
+            = deploy.app.name
+            %span.label.label-info.environment= deploy.environment
+          %td.when= deploy.created_at.to_s(:micro)
+          %td.who= deploy.username
+          %td.message= deploy.message
+          %td.repository= deploy.repository
+          %td.revision= deploy.short_revision
+  - else
+    %tbody
+      %tr
+        %td{ :colspan => 6}
+          %p No deploys
+
+-# = paginate deploys

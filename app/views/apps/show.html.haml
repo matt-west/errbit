@@ -57,34 +57,8 @@
     .span10
       - if @app.problems.any?
         = render 'errs/table', :errs => @problems
-        #deploys
-          %table.deploys.table.table-striped.table-bordered
-            %caption
-              %h3 Latest Deploys
-            %thead
-              %tr
-                %th When
-                %th Environment
-                %th Who
-                %th Message
-                %th Repository
-                %th Revision
+        = render 'deploys/table', :deploys => @deploys
 
-            - if @deploys.any?
-              %tbody
-                - @deploys.each do |deploy|
-                  %tr
-                    %td.when #{deploy.created_at.to_s(:micro)}
-                    %td.environment #{deploy.environment}
-                    %td.who #{deploy.username}
-                    %td.message #{deploy.message}
-                    %td.repository #{deploy.repository}
-                    %td.revision #{deploy.short_revision}
-            - else
-              %tbody
-                %tr
-                  %td{ :colspan => 6}
-                    %p No deploys
       - else
         .well
           %h3.clear.alert.alert-warning No errs have been caught yet, make sure you setup your app

@@ -83,7 +83,9 @@
         %tr
           %td{:colspan => (any_issue_links ? 8 : 7)}
             %em No errs here
+
   = paginate errs
+
   .btn-toolbar
     .btn-group
       %button{ :id => 'merge_errs', :class => 'app-err-button btn btn-primary', :name => 'commit', :data => { :action => merge_several_errs_path} }
