@@ -4,15 +4,24 @@
     .btn-group
       = render 'shared/link_github_account', :user => @user
 
-    %a{ :class => 'btn btn-inverse pull-right', :href => user_path(@user)}
-      %i{ :class => 'icon-chevron-left icon-white'}
-      Cancel
+    .btn-group.pull-right
+      = link_to('#user-delete-confirm', :class => 'btn btn-danger', :data => { :toggle => 'modal' }) do
+        %i{ :class => 'icon-trash icon-white' }
+        Delete User
+
+      = link_to(users_path(@user), { :class => 'btn btn-inverse' }) do
+        %i{ :class => 'icon-chevron-left icon-white'}
+        Cancel
 
 = form_for @user, :html => {:autocomplete => "off"} do |f|
   = @user.errors.full_messages.to_sentence
   = render 'fields', :f => f
 
   .btn-toolbar
-    %button{ :class => 'btn btn-primary' }
-      %i{ :class => 'icon-ok-sign icon-white' }
+    -# We can't seem to do f.submit as a block so replace with a button
+    %button{ :class => 'btn btn-success' }
+      %i{ :class => 'icon-thumbs-up icon-white' }
       Update User
+
+
+= render 'modals/user_delete_confirm', :user => @user

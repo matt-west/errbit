@@ -6,8 +6,8 @@
 -#    remote:        data-remote
 -#    paginator:     the paginator that renders the pagination tags inside
 = paginator.render do
-  .row
-    .notice-pagination.span3
+  .row-fluid
+    .notice-pagination
       %ul.pager
         %li.previous
           = next_page_tag

@@ -1,11 +1,11 @@
 - content_for :title, 'Users'
+
 - content_for :action_bar do
   .btn-toolbar
     .btn-group
-      %a{ :class => 'btn btn-primary', :href => new_user_path }
+      = link_to(new_user_path, { :class => 'btn btn-primary' }) do
         %i{ :class => 'icon-plus-sign icon-white' }
         Add New User
-
 
 %table.table.table-striped.table-bordered
   %thead
@@ -22,5 +22,6 @@
         - if Errbit::Config.user_has_username
           %td= user.username
         %td= user.email
-        %td= user.admin? ? 'Y' : 'N'
+        %td= user.admin? ? 'Yes' : 'No'
+
 = paginate @users

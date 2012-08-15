@@ -1,103 +1,112 @@
 - content_for :title, @app.name
+
 - content_for :head do
   = auto_discovery_link_tag :atom, app_path(@app, User.token_authentication_key => current_user.authentication_token, :format => "atom"), :title => "Errbit notices for #{@app.name} at #{request.host}"
+
 - content_for :meta do
-  %strong Errors Caught:
-  = @app.problems.count
-  %strong Deploy Count:
-  = @app.deploys.count
-  %strong API Key:
-  = @app.api_key
+  .row-fluid
+    - if @app.problems.count  > 0
+      %span.alert.alert-error.span4
+        %strong Errors Caught:
+        = @app.problems.count
+    - else
+      %span.alert.alert-success.span4
+        %strong Errors Caught:
+        = @app.problems.count
+    %span.alert.alert-info.span4
+      %strong Deploy Count:
+      = @app.deploys.count
+    %span.alert.alert-success.span4
+      %strong API Key:
+      = @app.api_key
+  %hr
+
 - content_for :action_bar do
   .btn-toolbar
     .btn-group
       - if current_user.admin?
-        %a{ :class => 'btn btn-primary', :href => edit_app_path(@app) }
+        = link_to(edit_app_path(@app), { :class => 'btn btn-primary' }) do
           %i{ :class => 'icon-edit icon-white' }
-          Edit
-        %a{ :class => 'btn btn-danger', :href => '#delete-confirm', :data => { :toggle => 'modal', :id => @app.id } }
-          %i{ :class => 'icon-trash icon-white' }
-          Delete
-      - if @all_errs
-        %a{ :class => 'btn btn-inverse', :href => app_path(@app) }
-          %i{ :class => 'icon-eye-close icon-white' }
-          Show Only Unresolved Errors
-      - else
-        %a{ :class => 'btn btn-info', :href => app_path(@app, :all_errs => true) }
-          %i{ :class => 'icon-eye-open icon-white' }
-          Show All Errors
-    %a{ :class => 'btn btn-inverse pull-right', :href => apps_path }
-      %i{ :class => 'icon-chevron-left icon-white'}
-      Back To Apps
+          Edit App
 
-  .row
+      -if @app.deploys.count > 0
+        = link_to(app_deploys_path(@app), { :class => 'btn btn-info' }) do
+          %i{ :class => 'icon-play icon-white'}
+          View Deploys
+      - if @app.problems.any?
+        - if @all_errs
+          = link_to(app_path(@app), { :class => 'btn btn-inverse' }) do
+            %i{ :class => 'icon-eye-close icon-white' }
+            Show Only Unresolved Errors
+        - else
+          = link_to(app_path(@app, :all_errs => true), { :class => 'btn btn-info' }) do
+            %i{ :class => 'icon-eye-open icon-white' }
+            Show All Errors
+
+      - if @app.github_repo?
+        = link_to(@app.github_url, { :class => 'btn btn-info', :target => '_blank' }) do
+          %i{ :class => 'icon-share icon-white' }
+          Goto Github Repo
+
+    .btn-group.pull-right
+      = link_to(apps_path, { :class => 'btn btn-inverse pull-right' }) do
+        %i{ :class => 'icon-chevron-left icon-white'}
+        Back To Apps
+
+  .row-fluid
     .span10
       - if @app.problems.any?
-        %h3.clear Errors
         = render 'errs/table', :errs => @problems
-      - else
-        %h3.clear.alert.alert-info No errs have been caught yet, make sure you setup your app
-        = render 'configuration_instructions', :app => @app
-
-      %h3.clear Latest Deploys
-      #deploys
-        %table.deploys.table.table-striped.table-bordered
-          %thead
-            %tr
-              %th When
-              %th Environment
-              %th Who
-              %th Message
-              %th Repository
-              %th Revision
-
-          - if @deploys.any?
-            %tbody
-              - @deploys.each do |deploy|
-                %tr
-                  %td.when #{deploy.created_at.to_s(:micro)}
-                  %td.environment #{deploy.environment}
-                  %td.who #{deploy.username}
-                  %td.message #{deploy.message}
-                  %td.repository #{deploy.repository}
-                  %td.revision #{deploy.short_revision}
-          - else
-            %tbody
+        #deploys
+          %table.deploys.table.table-striped.table-bordered
+            %caption
+              %h3 Latest Deploys
+            %thead
               %tr
-                %td{ :colspan => 6}
-                  %p No deploys
+                %th When
+                %th Environment
+                %th Who
+                %th Message
+                %th Repository
+                %th Revision
 
-        =link_to "All Deploys (#{@app.deploys.count})", app_deploys_path(@app), :class => 'button btn btn-primary'
+            - if @deploys.any?
+              %tbody
+                - @deploys.each do |deploy|
+                  %tr
+                    %td.when #{deploy.created_at.to_s(:micro)}
+                    %td.environment #{deploy.environment}
+                    %td.who #{deploy.username}
+                    %td.message #{deploy.message}
+                    %td.repository #{deploy.repository}
+                    %td.revision #{deploy.short_revision}
+            - else
+              %tbody
+                %tr
+                  %td{ :colspan => 6}
+                    %p No deploys
+      - else
+        .well
+          %h3.clear.alert.alert-warning No errs have been caught yet, make sure you setup your app
+          = render 'configuration_instructions', :app => @app
 
 
     .span2
-      .well
-        %h3 Watchers
-        #watchers
+      %table.watchers.table.table-striped.table-bordered
+        %caption
+          %h3 Watchers
+        %thead
+          %tr
+            %th Watcher Username / Email
+        %tbody
           - if @app.notify_all_users
-            %p All users will be notified when something happens.
+            %tr
+              %td All users will be notified when something happens.
           - else
-            %ul
-            - @app.watchers.each do |watcher|
-              %li= watcher.label
             - if @app.watchers.none?
-              %p
-                %em Sadly, no one is watching this app
-
-
-      - if @app.github_repo?
-        .well
-          %h3 Repository
-          #repository
-            = link_to(@app.github_repo, @app.github_url, :target => '_blank')
-
-
-%div.modal.fade#delete-confirm
-  .modal-header
-    %a{ :class => 'close', :data => { :dismiss => 'modal' } }
-    %h2= "Delete #{@app.name}"
-  .modal-body
-    %p= "Are you sure you wish to delete #{@app.name}?"
-  .modal-footer
-    =link_to 'Delete', app_path(@app), :method => :delete, :class => 'button btn btn-danger'
-    %a{ :href => '#', :class => 'btn btn-primary', :data => { :dismiss => 'modal' } } Cancel
+              %tr
+                %td
+                  %em #{@app.name} has no watchers
+            - @app.watchers.each do |watcher|
+              %tr
+                %td= watcher.label

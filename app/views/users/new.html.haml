@@ -3,15 +3,17 @@
   .btn-toolbar
     .btn-group
 
-    %a{ :class => 'btn btn-inverse pull-right', :href => users_path }
-      %i{ :class => 'icon-chevron-left icon-white'}
-      Cancel
+    .btn-group.pull-right
+      = link_to(users_path, { :class => 'btn btn-inverse' }) do
+        %i{ :class => 'icon-chevron-left icon-white'}
+        Cancel
 
 = form_for @user do |f|
 
   = render 'fields', :f => f
 
   .btn-toolbar
-    %button{ :class => 'btn btn-primary' }
-      %i{ :class => 'icon-ok-sign icon-white' }
+    -# We can't seem to do f.submit as a block so replace with a button
+    %button{ :class => 'btn btn-success' }
+      %i{ :class => 'icon-thumbs-up icon-white' }
       Add User

@@ -1,7 +1,16 @@
 - content_for :title, 'Search Results'
+
 - content_for :action_bar do
-  - if params[:resolved].present?
-    = link_to 'hide resolved', params.except(:resolved), {:class => 'button'}
-  - else
-    = link_to 'show resolved', params.merge({:resolved => true}), {:class => 'button'}
+  .btn-toolbar
+    .btn-group
+      - if params[:resolved].present?
+        = link_to(params.except(:resolved), { :class => 'btn btn-inverse' }) do
+          %i{ :class => 'icon-eye-close icon-white' }
+          Show Only Unresolved Errors
+
+      - else
+        = link_to(params.merge({:resolved => true}), { :class => 'btn btn-info' }) do
+          %i{ :class => 'icon-eye-open icon-white' }
+          Show All Errors
+
 = render 'table', :errs => @problems

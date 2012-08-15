@@ -1,0 +1,16 @@
+%div.modal.fade#error-unlink-issue-confirm
+  .modal-header
+    %a{ :class => 'close', :data => { :dismiss => 'modal' } }
+    %h2= "Confirm Unlink Issue?"
+
+  .modal-body
+    %p= "Are you sure you wish to unlink this issue from this error?"
+
+  .modal-footer
+    = link_to(unlink_issue_app_err_path(@app, @problem), { :method => :delete, :class => 'btn btn-danger' }) do
+      %icon{ :class => 'icon-thumbs-up icon-white'}
+      Confirm
+
+    = link_to('#', { :class => 'btn btn-primary', :data => { :dismiss => 'modal' } }) do
+      %i{ :class => 'icon-thumbs-down icon-white'}
+      Cancel

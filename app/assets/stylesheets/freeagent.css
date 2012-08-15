@@ -75,6 +75,11 @@ div.issue_tracker.nested label.label_radio {
   visibility: hidden;
 }
 
+#content {
+  margin-bottom: 50px;
+}
+
+/*
 footer {
    position:fixed;
    left:0;
@@ -84,3 +89,4 @@ footer {
    background:#000;
    color: #fff;
 }
+*/

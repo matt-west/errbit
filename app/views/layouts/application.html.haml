@@ -41,8 +41,9 @@
       - if content_for?(:comments)
         #content-comments
           = yield :comments
-      %footer
-        .container-fluid
-          = "Powered by #{link_to 'Errbit', 'http://github.com/errbit/errbit', :target => '_blank'}: the open source error catcher.".html_safe
+      %footer.navbar.navbar-fixed-bottom
+        .navbar-inner
+          .container-fluid
+            = "Powered by #{link_to 'Errbit', 'http://github.com/errbit/errbit', :target => '_blank'}: the open source error catcher.".html_safe
     = yield :scripts
 

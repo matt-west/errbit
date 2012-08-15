@@ -4,24 +4,21 @@
     .btn-group
       = render 'shared/link_github_account', :user => @user
 
-      %a{ :class => 'btn btn-primary', :href => new_user_path }
+      = link_to(edit_user_path(@user), { :class => 'btn btn-primary' }) do
+        %i{ :class => 'icon-edit icon-white' }
+        Edit User
+
+    .btn-group.pull-right
+      = link_to(new_user_path, { :class => 'btn btn-primary' }) do
         %i{ :class => 'icon-plus-sign icon-white' }
         Add New User
 
-      %a{ :class => 'btn btn-primary', :href => edit_user_path(@user) }
-        %i{ :class => 'icon-edit icon-white' }
-        Edit
-
-      %a{ :class => 'btn btn-danger', :href => '#delete-confirm', :data => { :toggle => 'modal', :id => @user.id } }
-        %i{ :class => 'icon-trash icon-white' }
-        Delete
-
-    %a{ :class => 'btn btn-inverse pull-right', :href => users_path }
-      %i{ :class => 'icon-chevron-left icon-white'}
-      Back To Users
+      = link_to(users_path, { :class => 'btn btn-inverse' }) do
+        %i{ :class => 'icon-chevron-left icon-white'}
+        Back To Users
 
 
-%table.single_user.table.table-striped
+%table.single_user.table.table-striped.table-bordered
   %tr
     %th Email
     %td.main= @user.email
@@ -35,18 +32,7 @@
       %td.main= link_to @user.github_login, "https://github.com/#{@user.github_login}"
   %tr
     %th Admin?
-    %td= @user.admin? ? 'Y' : 'N'
+    %td= @user.admin? ? 'Yes' : 'No'
   %tr
     %th Created
     %td= @user.created_at.to_s(:micro)
-
-
-%div.modal.fade#delete-confirm
-  .modal-header
-    %a{ :class => 'close', :data => { :dismiss => 'modal' } }
-    %h2= "Delete #{@user.name}"
-  .modal-body
-    %p= "Are you sure you wish to delete #{@user.name}?"
-  .modal-footer
-    =link_to 'Delete', user_path(@user), :method => :delete, :class => 'button btn btn-danger'
-    %a{ :href => '#', :class => 'btn btn-primary', :data => { :dismiss => 'modal' } } Cancel

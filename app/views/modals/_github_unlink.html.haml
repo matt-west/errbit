@@ -1,0 +1,14 @@
+%div.modal.fade#github-unlink-confirm
+  .modal-header
+    %a{ :class => 'close', :data => { :dismiss => 'modal' } }
+    %h2= "Confirm Unlink Github Account?"
+  .modal-body
+    %p= "Are you sure you wish to unlink this users github account?"
+  .modal-footer
+    = link_to(unlink_github_user_path(user), { :method => :delete, :class => 'btn btn-danger' }) do
+      %icon{ :class => 'icon-thumbs-up icon-white'}
+      Confirm
+
+    = link_to('#', { :class => 'btn btn-primary', :data => { :dismiss => 'modal' } }) do
+      %i{ :class => 'icon-thumbs-down icon-white'}
+      Cancel

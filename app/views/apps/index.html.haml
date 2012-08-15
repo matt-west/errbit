@@ -1,10 +1,10 @@
 - content_for :title, 'Apps'
 
 - content_for :action_bar do
-  .btn-toolbar
-    .btn-group
-      - if current_user.admin?
-        %a{ :class => 'btn btn-primary', :href => new_app_path }
+  - if current_user.admin?
+    .btn-toolbar
+      .btn-group
+        = link_to(new_app_path, { :class => 'btn btn-primary' }) do
           %i{ :class => 'icon-plus-sign icon-white' }
           Add New App
 
@@ -24,20 +24,17 @@
 
         %td.github_repo
           - if app.github_repo?
-            = link_to(app.github_repo, app.github_url, :target => '_blank')
+            = link_to(app.github_repo, app.github_url, { :target => '_blank' })
           - else
-            N/A
+            = link_to(edit_app_path(app), :class => 'btn') do
+              %i{ :class => 'icon-plus-sign'}
 
         %td.issue_tracker
           - if app.issue_tracker_configured?
-            - tracker_img = image_tag("#{app.issue_tracker.label}_goto.png")
-            - if app.issue_tracker.url
-              %a{ :class => '', :href => app.issue_tracker.url, :target => "#{app.issue_tracker.label}_new"}
-                =app.issue_tracker.label.titleize
-            - else
-              = tracker_img
+            = link_to(app.issue_tracker.label.titleize, app.issue_tracker.url, { :target => '_blank'})
           - else
-            N/A
+            = link_to(edit_app_path(app), :class => 'btn') do
+              %i{ :class => 'icon-plus-sign'}
 
         %td.deploy
           - if app.last_deploy_at

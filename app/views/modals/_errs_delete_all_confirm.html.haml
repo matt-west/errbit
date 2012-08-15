@@ -1,0 +1,15 @@
+%div.modal.fade#errs-delete-confirm-all
+  .modal-header
+    %a{ :class => 'close', :data => { :dismiss => 'modal' } }
+    %h2= "Delete Errors?"
+
+  .modal-body
+    %p= "Are you sure you wish to delete these errors?"
+
+  .modal-footer
+    %button{ :id => 'delete_errs', :class => 'app-err-button btn btn-danger', :name => 'commit', :data => { :action => destroy_several_errs_path} }
+      %i{ :class => 'icon-thumbs-up icon-white'}
+      Delete
+    %a{ :href => '#', :class => 'btn btn-primary', :data => { :dismiss => 'modal' } }
+      %i{ :class => 'icon-thumbs-down icon-white' }
+      Cancel

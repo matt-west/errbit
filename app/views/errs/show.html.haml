@@ -2,34 +2,44 @@
 - content_for :title_css_class, 'err_show'
 - content_for :title, @problem.error_class || truncate(@problem.message, :length => 32)
 - content_for :meta do
-  %strong App:
-  = link_to @app.name, app_path(@app)
-  %strong Where:
-  = @problem.where
-  %br
-  %strong Environment:
-  = @problem.environment
-  %strong Last Notice:
-  = last_notice_at(@problem).to_s(:precise)
+  .row-fluid
+    %span.alert.alert-info.span3
+      %strong App:
+      = link_to @app.name, app_path(@app)
+    %span.alert.alert-info.span3
+      %strong Where:
+      = @problem.where
+    %span.alert.alert-info.span3
+      %strong Environment:
+      %span.label.label-info= @problem.environment
+    %span.alert.alert-info.span3
+      %strong Last Notice:
+      = last_notice_at(@problem).to_s(:precise)
+  %hr
 
 - content_for :action_bar do
   .btn-toolbar
     .btn-group
       - if @problem.unresolved?
-        %a{ :class => 'resolve btn btn-primary', :href => '#delete-confirm-resolved', :data => { :toggle => 'modal' } }
+        = link_to(resolve_app_err_path(@app, @problem), {:class => 'btn btn-primary', :data => { :method => 'put' } }) do
           %i{ :class => 'icon-thumbs-up icon-white' }
           Resolve
+      - else
+        = link_to(unresolve_app_err_path(@app, @problem), {:class => 'btn btn-warning', :data => { :method => 'put' } }) do
+          %i{ :class => 'icon-thumbs-down icon-white' }
+          Unresolve
 
       - if current_user.authentication_token
-        %a{ :class => 'calendar_link btn btn-primary', :href => app_err_path(:app_id => @app.id, :id => @problem.id, :format => "ics", :auth_token => current_user.authentication_token)}
+        = link_to(app_err_path(:app_id => @app.id, :id => @problem.id, :format => "ics", :auth_token => current_user.authentication_token), { :class => 'calendar_link btn btn-primary' }) do
           %i{ :class => 'icon-calendar icon-white'}
           iCal
 
       = render "issue_tracker_links"
 
-    %a{ :class => 'btn btn-inverse pull-right', :href => errs_path }
-      %i{ :class => 'icon-chevron-left icon-white'}
-      Back To Errors
+    .btn-group.pull-right
+      = link_to(errs_path, { :class => 'btn btn-inverse' }) do
+        %i{ :class => 'icon-chevron-left icon-white'}
+        Back To Errors
 
 - if Errbit::Config.allow_comments_with_issue_tracker || !@app.issue_tracker_configured? || @problem.comments.any?
   - content_for :comments do
@@ -51,9 +61,9 @@
           = comment_form.text_area :body, :style => "width: 100%; height: 80px;"
           = comment_form.submit "Save Comment", :class => 'btn btn-primary'
 
-.well
-  %h4= @notice.try(:message)
 
+.alert.alert-block
+  %h4.alert-heading= @notice.try(:message)
   = paginate @notices, :param_name => :notice, :theme => :notices
 
 .btn-toolbar
@@ -112,16 +122,3 @@
   #session
     %h3 Session
     = render 'notices/session', :notice => @notice
-
-
-%div.modal.fade#delete-confirm-resolved
-  .modal-header
-    %a{ :class => 'close', :data => { :dismiss => 'modal' } }
-    %h2= "Confirm Resolved?"
-  .modal-body
-    %p= "Confirm this issue has been resolved?"
-  .modal-footer
-    %a{ :id => 'resolve', :class => 'btn btn-danger', :data => { :method => 'put' }, :href => resolve_app_err_path(@app, @problem) }
-      %i{ :class => 'icon-thumbs-up icon-white'}
-      Confirm
-    %a{ :href => '#', :class => 'btn btn-primary', :data => { :dismiss => 'modal' } } Cancel

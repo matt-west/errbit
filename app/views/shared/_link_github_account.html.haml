@@ -1,5 +1,12 @@
 - if Errbit::Config.github_authentication && user == current_user
   - if user.github_account?
-    %span.unlink_github= link_to "Unlink GitHub account", unlink_github_user_path(user), :method => :delete, :data => { :confirm => "Are you sure?" }
+    = link_to('#github-unlink-confirm', { :data => { :toggle => 'modal' } , :class => 'btn btn-danger' }) do
+      %i{ :class => 'icon-magnet icon-white'}
+      Unlink Github Account
+
+    = render 'modals/github_unlink', :user => @user
+
   - else
-    %span.github= link_to "Link GitHub account", user_omniauth_authorize_path(:github)
+    = link_to(user_omniauth_authorize_path(:github), { :class => 'btn btn-info' }) do
+      %i{ :class => 'icon-share icon-white' }
+      Link GitHub account

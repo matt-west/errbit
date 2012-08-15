@@ -2,7 +2,7 @@
 - content_for :action_bar do
   .btn-toolbar
     .btn-group
-      %a{ :class => 'btn btn-inverse', :href => errs_path }
+      = link_to(errs_path, { :class => 'btn btn-inverse' }) do
         %i{ :class => 'icon-eye-close icon-white' }
         Show Only Unresolved Errors
 

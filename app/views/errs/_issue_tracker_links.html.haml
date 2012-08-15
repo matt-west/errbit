@@ -1,15 +1,42 @@
 - if @app.issue_tracker_configured? || current_user.github_account?
+
   - if @problem.issue_link.present?
-    =link_to 'Go to issue', @problem.issue_link, :class => "#{@problem.issue_type}_goto goto-issue btn btn-primary"
-    =link_to 'Unlink issue', unlink_issue_app_err_path(@app, @problem), :method => :delete, :data => { :confirm => "Unlink Error issues?" }, :class => "unlink-issue btn btn-primary"
+
+    = link_to(@problem.issue_link, :class => "goto-issue btn btn-primary") do
+      %i{ :class => 'icon-share icon-white'}
+      Go to issue
+
+    = render 'modals/err_unlink_issue', :app => @app, :problem => @problem
+    = link_to('#error-unlink-issue-confirm', { :class => 'btn btn-danger', :data => { :toggle => 'modal'} }) do
+      %i{ :class => 'icon-magnet icon-white'}
+      Unlink Issue
+
   - elsif @problem.issue_link == "pending"
-    %span.disabled= link_to 'creating...', '#', :class => "#{@problem.issue_type}_inactive create-issue"
-    =link_to 'retry', create_issue_app_err_path(@app, @problem), :method => :post
+    = link_to('#', :class => "#{@problem.issue_type}_inactive create-issue btn", :disabled => true) do
+      Creating...
+
+    = link_to(create_issue_app_err_path(@app, @problem), { :method => :post }) do
+      %i{ :class => 'icon-retweet icon-white'}
+      Retry
+
   - else
+
     - if @app.github_repo?
+
       - if current_user.can_create_github_issues?
-        =link_to 'Create Issue', create_issue_app_err_path(@app, @problem, :tracker => 'user_github'), :method => :post, :class => "github_create create-issue btn btn-primary"
+
+        = link_to(create_issue_app_err_path(@app, @problem, :tracker => 'user_github'), { :method => :post, :class => "create-issue btn btn-primary" }) do
+          %i{ :class => 'icon-share icon-white'}
+          Create Issue
+
       - elsif @app.issue_tracker_configured? && @app.issue_tracker.is_a?(GithubIssuesTracker)
-        =link_to 'Create Issue', create_issue_app_err_path(@app, @problem), :method => :post, :class => "github_create create-issue btn btn-primary"
+        = link_to(create_issue_app_err_path(@app, @problem), { :method => :post, :class => "create-issue btn btn-primary" }) do
+          %i{ :class => 'icon-share icon-white'}
+          Create Issue
+
     - if @app.issue_tracker_configured? && !@app.issue_tracker.is_a?(GithubIssuesTracker)
-      =link_to 'Create Issue', create_issue_app_err_path(@app, @problem), :method => :post, :class => "#{@app.issue_tracker.label}_create create-issue btn btn-primary"
+
+      = link_to(create_issue_app_err_path(@app, @problem), { :method => :post, :class => "create-issue btn btn-primary" }) do
+        %i{ :class => 'icon-share icon-white'}
+        Create Issue
+

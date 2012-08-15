@@ -2,6 +2,8 @@
 =form_tag({}, :id => 'app-errors') do
 
   %table.errs.selectable.table.table-striped.table-bordered
+    %caption
+      %h3 Errors
     %thead
       %tr
         %th= check_box_tag "toggle_problems_checkboxes"
@@ -63,7 +65,8 @@
           - if any_issue_links
             %td.issue_link
               - if problem.app.issue_tracker_configured? && problem.issue_link.present? && problem.issue_link != 'pending'
-                = link_to image_tag("#{problem.issue_type}_goto.png"), problem.issue_link, :target => "_blank"
+                %a{ :class => 'btn btn-info', :href => problem.issue_link, :target => '_blank'}
+                  %i{ :class => 'icon-share icon-white'}
 
           %td.resolve
             -if problem.unresolved?
@@ -72,7 +75,7 @@
                 Resolve
             -else
               %a{ :class => 'resolve btn btn-warning', :href => unresolve_app_err_path(problem.app, problem), :data => { :method => 'put' } }
-                %i{ :class => 'icon-thumbs-up icon-white'}
+                %i{ :class => 'icon-thumbs-down icon-white'}
                 Unresolve
 
 
@@ -99,19 +102,9 @@
         %i{ :class => 'icon-thumbs-down icon-white'}
         Mark Unresolved
 
-    %a{ :class => 'btn btn-danger pull-right', :href => '#delete-confirm-all', :data => { :toggle => 'modal' } }
-      %i{ :class => 'icon-trash icon-white' }
-      Delete
+      %a{ :class => 'btn btn-danger', :href => '#errs-delete-confirm-all', :data => { :toggle => 'modal' } }
+        %i{ :class => 'icon-trash icon-white' }
+        Delete
 
 
-%div.modal.fade#delete-confirm-all
-  .modal-header
-    %a{ :class => 'close', :data => { :dismiss => 'modal' } }
-    %h2= "Delete Errors?"
-  .modal-body
-    %p= "Are you sure you wish to delete these errors?"
-  .modal-footer
-    %button{ :id => 'delete_errs', :class => 'app-err-button btn btn-danger', :name => 'commit', :data => { :action => destroy_several_errs_path} }
-      %i{ :class => 'icon-trash icon-white'}
-      Delete
-    %a{ :href => '#', :class => 'btn btn-primary', :data => { :dismiss => 'modal' } } Cancel
+= render 'modals/errs_delete_all_confirm'

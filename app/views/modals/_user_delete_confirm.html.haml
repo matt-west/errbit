@@ -1,0 +1,15 @@
+%div.modal.fade#user-delete-confirm
+  .modal-header
+    %a{ :class => 'close', :data => { :dismiss => 'modal' } }
+    %h2= "Delete User?"
+
+  .modal-body
+    %p= "Are you sure you wish to delete #{@user.name}?"
+
+  .modal-footer
+    = link_to(user_path(@user), { :method => :delete, :class => 'button btn btn-danger' }) do
+      %i{ :class => 'icon-thumbs-up icon-white' }
+      Confirm
+    = link_to('#', { :class => 'btn btn-primary', :data => { :dismiss => 'modal' } }) do
+      %i{ :class => 'icon-thumbs-down icon-white' }
+      Cancel
