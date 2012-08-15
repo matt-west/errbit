@@ -2,7 +2,7 @@
   .nav-collapse
     %ul{:id => 'session-links', :class => 'nav pull-right'}
       %li.dropdown.session
-        %a{ :href => '#', :class => 'dropdown-toggle', :data => { :toggle => 'dropdown' } }
+        = link_to('#', { :class => 'dropdown-toggle', :data => { :toggle => 'dropdown' } }) do
           = current_user.email
           %b.caret
         %ul.dropdown-menu

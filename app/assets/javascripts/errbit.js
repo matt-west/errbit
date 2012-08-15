@@ -36,7 +36,6 @@ $(function() {
 
     $('button.app-err-button').on('click', function() {
       $('form#app-errors').attr('action', $(this).attr('data-action'));
-      $('form#app-errors').submit();
     });
 
     $('.notice-pagination').each(function() {
