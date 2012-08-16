@@ -9,6 +9,9 @@
  *= require_self
  */
 
+table.table table.tally td, table.table table.tally th { border-top: 0px solid black !important; }
+table.table table.tally tr:first-child td, table.table table.tally tr:first-child th { padding-top: 1px; }
+
 // Allow any gems named 'errbit_*' to require their own assets
 <% Gem.loaded_specs.keys.grep(/^errbit_/).each do |plugin|
   require_asset(plugin) rescue Sprockets::FileNotFound

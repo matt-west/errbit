@@ -1,9 +1,6 @@
 .window
-  %table.user_attributes
-    %tr
-      %td
-        %strong Information about the user who experienced the error.
+  %table.user_attributes.table.table-striped
     - user.each do |user_key, user_value|
       %tr
-        %th= user_key
+        %th= user_key.humanize
         %td= auto_link(user_value.to_s).html_safe
