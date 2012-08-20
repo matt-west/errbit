@@ -12,12 +12,12 @@
         %i{ :class => 'icon-chevron-left icon-white'}
         Back To Apps
 
-- form_for @app do |f|
+= form_for @app do |f|
 
-  - render 'fields', :f => f
+  = render 'fields', :f => f
 
   .btn-toolbar
     %button{ :class => 'btn btn-primary' }
-      %i{ :class => 'icon-ok-sign icon-white' }
-      Add App
+    %i{ :class => 'icon-ok-sign icon-white' }
+    Add App
 
