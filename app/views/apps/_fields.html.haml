@@ -1,4 +1,4 @@
-
+= errors_for @app
 
 .row-fluid
   .span8
@@ -44,7 +44,6 @@
             = f.check_box :notify_all_users
             Send notifications to all users
 
-    = render "issue_tracker_fields", :f => f
 
   .span4
     %fieldset.watchers.nested-wrapper{:style => f.object.notify_all_users ? 'display: none;' : ''}
