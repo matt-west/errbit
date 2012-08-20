@@ -39,7 +39,6 @@ class AppsController < InheritedResources::Base
   end
 
   def new
-    @app = App.new
     plug_params(build_resource)
     new!
   end
