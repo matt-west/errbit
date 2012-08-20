@@ -9,14 +9,14 @@
 # You will need to restart the server after changing any settings.
 
 # The host of your errbit server
-host: errbit.example.com
+host: cc-error-tracking.herokuapp.com
 
 # Enforce SSL connections
 enforce_ssl: false
 
 # The email address which email notifications
 # will be sent from.
-email_from: errbit@example.com
+email_from: errbit@developercity.co.uk
 
 # If you turn on this option, email_at_notices can be
 # configured on a per app basis, at the App edit page
