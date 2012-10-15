@@ -9,7 +9,7 @@
 # You will need to restart the server after changing any settings.
 
 # The host of your errbit server
-host: cc-error-tracking.herokuapp.com
+host: dc-error-tracking.herokuapp.com
 
 # Enforce SSL connections
 enforce_ssl: false
